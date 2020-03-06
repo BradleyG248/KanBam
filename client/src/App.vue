@@ -15,6 +15,7 @@ export default {
       await onAuth();
       this.$store.dispatch("setBearer", this.$auth.bearer);
       this.$store.dispatch("getProfile");
+      this.$store.dispatch("initializeSocket", this.$auth.bearer);
     } catch (err) {
       this.$router.push({ name: "home" });
     }
@@ -48,5 +49,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+app {
+  background-image: url(https://www.lionfront.com/wp-content/uploads/2018/03/coffee-smartphone-desk-pen-1.jpg);
+  background-size: cover;
 }
 </style>
