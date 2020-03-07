@@ -30,12 +30,19 @@ export const socketStore = {
       });
 
       socket.on('removeTask', data => {
-        // debugger;
         commit("deleteTask", data);
       });
 
       socket.on("changeTask", data => {
+        commit("moveTask", data);
+      });
+
+      socket.on("addComment", data => {
         debugger;
+        commit("editTask", data);
+      });
+
+      socket.on("removeComment", data => {
         commit("editTask", data);
       });
     },
