@@ -145,6 +145,7 @@ export default new Vuex.Store({
 
     async changeList({ dispatch }, bananaId) {
       await api.put(`tasks/${bananaId.taskId}`, { listId: bananaId.listId })
+      dispatch("getTasksByListId", bananaId.listId)
     }
 
 
