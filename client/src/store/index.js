@@ -46,17 +46,21 @@ export default new Vuex.Store({
     addTask(state, task) {
       state.tasks[task.listId].push(task)
     },
+    moveTask(state, task) {
+      let tesk = task.task;
+      state.tasks[task.task.listId].push(tesk)
+      state.tasks[task.oldList] = state.tasks[task.oldList].filter(c => c.id != task.task.id)
+    },
     editTask(state, task) {
-      debugger;
-      let task1 = state.tasks.find(c => c.id == task.id)
-      task1 = task;
+      let index = state.tasks[task.listId].findIndex(c => c.id == task.id)
+      state.tasks[task.listId] = state.tasks[task.listId].filter(t => t.id != task.id)
+      state.tasks[task.listId].push(task)
     },
     deleteTask(state, task) {
-      debugger
       state.tasks[task.listId] = state.tasks[task.listId].filter(c => c.id != task.id)
-      console.log(state.tasks[task.listId].filter(c => c.id != task.id))
     },
     setTasks(state, tasks) {
+      debugger;
       Vue.set(state.tasks, tasks.listId, tasks.tasks)
     }
   },
@@ -134,11 +138,9 @@ export default new Vuex.Store({
     },
     async createComment({ commit, dispatch }, comment) {
       await api.post(`tasks/${comment.taskId}/comments`, comment)
-      dispatch("getTasksByListId", comment.listId)
     },
     async deleteComment({ dispatch }, commentDict) {
       await api.delete(`tasks/${commentDict.taskId}/comments/${commentDict.commentId}`)
-      dispatch("getTasksByListId", commentDict.listId)
     },
 
     async changeList({ dispatch }, bananaId) {

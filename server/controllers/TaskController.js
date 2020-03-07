@@ -39,8 +39,9 @@ export class TaskController extends BaseController {
 
   async edit(req, res, next) {
     try {
+      let oTask = await taskService.getById(req.params.id, req.userInfo.email)
       let data = await taskService.edit(req.params.id, req.userInfo.email, req.body)
-      socketService.messageRoom('tasks', 'changeTask', data)
+      socketService.messageRoom('tasks', 'changeTask', { task: data, oldList: oTask.listId })
       return res.send(data)
     } catch (error) { next(error) }
   }
@@ -56,6 +57,8 @@ export class TaskController extends BaseController {
   async createComment(req, res, next) {
     try {
       let commentFound = await taskService.addComment(req.params.id, req.body)
+      let task = await taskService.getById(req.params.id, req.userInfo.email)
+      socketService.messageRoom('tasks', 'addComment', task)
       return res.send(commentFound)
     } catch (error) {
       next(error)
@@ -65,6 +68,8 @@ export class TaskController extends BaseController {
   async deleteComment(req, res, next) {
     try {
       let data = await taskService.deleteComment(req.params.id, req.params.commentId)
+      let task = await taskService.getById(req.params.id, req.userInfo.email)
+      socketService.messageRoom('tasks', 'removeComment', task)
       {
         res.send("comment deleted!")
       }
