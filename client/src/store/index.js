@@ -52,7 +52,6 @@ export default new Vuex.Store({
       state.tasks[task.oldList] = state.tasks[task.oldList].filter(c => c.id != task.task.id)
     },
     editTask(state, task) {
-      let index = state.tasks[task.listId].findIndex(c => c.id == task.id)
       state.tasks[task.listId] = state.tasks[task.listId].filter(t => t.id != task.id)
       state.tasks[task.listId].push(task)
     },

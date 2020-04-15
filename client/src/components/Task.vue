@@ -123,7 +123,4 @@ img.delete-task {
 img.form {
   height: 1.5rem;
 }
-div.comment {
-  opacity: 90%;
-}
 </style>
