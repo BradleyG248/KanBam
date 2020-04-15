@@ -38,7 +38,6 @@ export const socketStore = {
       });
 
       socket.on("addComment", data => {
-        debugger;
         commit("editTask", data);
       });
 

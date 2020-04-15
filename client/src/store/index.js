@@ -59,7 +59,6 @@ export default new Vuex.Store({
       state.tasks[task.listId] = state.tasks[task.listId].filter(c => c.id != task.id)
     },
     setTasks(state, tasks) {
-      debugger;
       Vue.set(state.tasks, tasks.listId, tasks.tasks)
     }
   },
