@@ -30,10 +30,12 @@ export default {
       return this.$store.state.lists;
     }
   },
-  mounted() {
-    this.$store.dispatch("joinRoom", "lists");
-    this.$store.dispatch("setActiveBoard", this.$route.params.boardId);
-    this.$store.dispatch("getList", this.$route.params.boardId);
+  async mounted() {
+    if(await this.$auth.isAuthenticated){
+      this.$store.dispatch("joinRoom", "lists");
+      this.$store.dispatch("setActiveBoard", this.$route.params.boardId);
+      this.$store.dispatch("getList", this.$route.params.boardId);
+    }
   },
   beforeDestroy() {
     this.$store.dispatch("leaveRoom", "lists");

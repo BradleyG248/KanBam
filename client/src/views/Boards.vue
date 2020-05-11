@@ -38,8 +38,10 @@ import Board from "../components/Board";
 
 export default {
   name: "boards",
-  mounted() {
-    this.$store.dispatch("getBoards");
+  async mounted() {
+    if (await this.$auth.isAuthenticated) {
+      this.$store.dispatch("getBoards");
+    }
   },
   data() {
     return {
